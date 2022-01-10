@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo $lang_code; ?>" dir="<?php echo $lang_direction; ?>">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>DRA- Departmental Result Archive</title>
@@ -33,41 +33,17 @@
     <script src="/js/jquery.sumoselect.min.js"></script>
     <script src="/js/common.js"></script>
     <script type="text/javascript">
-        var baseURL = "http://127.0.0.1:8000";
+        var baseURL = "http://127.0.0.1:8000/";
     </script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body class="skin-purple sidebar-mini">
 
-    <?php
-    $userid = $userid;
-    $avator = getSingledata('users', 'avatar', 'userId', $userid);
-    if(empty($avator)){
-        $img_path = site_url('/uploads/users/').'/avator.png';
-    }else{
-        $img_path = site_url('/uploads/users/').'/'.$avator;
-    }
 
-    $institude_name = getParam('name');
-    $logo = getParam('logo');
-
-    if(empty($logo)){
-        $logo_path = site_url('/uploads/logo/').'/rms_logo_light.png';
-    }else{
-        $logo_path = site_url('/uploads/logo/').'/'.$logo;
-    }
-    ?>
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="{{ base_url() }}" class="logo">
+        <a href="/home" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">
             <img src="/dist/img/logo.png" style="max-width: 80%;"  alt="DRA"  >
@@ -91,7 +67,7 @@
                   <i class="fa fa-history"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">{{ now() }} :<i class="fa fa-clock-o"></i>First Time Login</li>
+                  <li class="header">{{ \Carbon\Carbon::now() }} :<i class="fa fa-clock-o"></i>First Time Login</li>
                 </ul>
               </li>
 
@@ -137,11 +113,11 @@
           <ul class="sidebar-menu">
             <!-- <li class="header text-center">DRA</li> -->
             Admin
-            <?php if(empty($front_end_result)): ?>
+            @if(empty($front_end_result)) :
             <li class=" bg-green">
-              <a href="<?php echo base_url(); ?>results"  target="_blank" ><i class="fa fa-trophy"></i><span>Front end result</span></a>
+              <a href="/results"  target="_blank" ><i class="fa fa-trophy"></i><span>Front end result</span></a>
             </li>
-            <?php endif; ?>
+            @endif
 
           </ul>
         </section>
@@ -152,7 +128,7 @@
         <div class="pull-right hidden-xs">
           <b>Departmental Result Archive</b>  | Version 1.0
         </div>
-        <strong>Copyright &copy; DRA <a href="<?php echo base_url(); ?>">SARAH</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; DRA <a href="/">SARAH</a>.</strong> All rights reserved.
     </footer>
 
     <!-- jQuery UI 1.11.2 -->
