@@ -75,17 +75,17 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img style="width: 20px; height: 20px;" src="/dist/img/avator.png" class="img-circle" alt="User Image" />
+                  <img style="width: 20px; height: 20px;" src="/dist/img/avatar.png" class="img-circle" alt="User Image" />
                   <span class="hidden-xs">{{ auth()->user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
 
-                    <img src="{{ auth()->user()->name }}" class="img-circle" alt="User Image" />
+                    <img src="/dist/img/avatar.png" class="img-circle" alt="User Image" />
                     <p>
                         {{ auth()->user()->name }}
-                      <small>Admin</small>
+                      <small>Super Admin</small>
                     </p>
 
                   </li>
@@ -111,8 +111,7 @@
         <section class="sidebar">
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <!-- <li class="header text-center">DRA</li> -->
-            Admin
+          @include('layouts.sidemenu')
             @if(empty($front_end_result)) :
             <li class=" bg-green">
               <a href="/results"  target="_blank" ><i class="fa fa-trophy"></i><span>Front end result</span></a>
