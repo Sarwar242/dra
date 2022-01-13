@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\BatchController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\GradeCategoryController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamGradeController;
+use App\Http\Controllers\ExamMarkController;
+use App\Http\Controllers\MarkDistributionController;
+use App\Http\Controllers\MarkDistributionValueController;
+use App\Http\Controllers\RankController;
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +36,68 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login',  [AuthController::class, 'login'])->name('login.post');
+
+
+Route::group(['middleware'=>'auth'], function (){
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        //Dept
+        Route::get('/departments',[DepartmentController::class, 'index'])->name('departments');
+        Route::get('/departments/create',[DepartmentController::class, 'create'])->name('department.create');
+        Route::post('/departments/create',[DepartmentController::class, 'store'])->name('department.store');
+        Route::get('/departments/edit/{id}',[DepartmentController::class, 'edit'])->name('department.edit');
+        Route::post('/departments/update/{id}',[DepartmentController::class, 'update'])->name('department.update');
+        Route::get('/departments/delete',[DepartmentController::class, 'destroy'])->name('department.delete');
+
+        //Courses
+        Route::get('/courses',[CourseController::class, 'index'])->name('courses');
+        Route::get('/courses/create',[CourseController::class, 'create'])->name('course.create');
+        Route::post('/courses/create',[CourseController::class, 'store'])->name('course.store');
+        Route::get('/courses/update/{id}',[CourseController::class, 'edit'])->name('course.edit');
+        Route::post('/courses/update/{id}',[CourseController::class, 'update'])->name('course.update');
+        Route::get('/courses/delete}',[CourseController::class, 'destroy'])->name('course.delete');
+
+        //Batches
+        Route::get('/batches',[BatchController::class, 'index'])->name('batches');
+        Route::get('/batches/create',[BatchController::class, 'create'])->name('batch.create');
+        Route::post('/batches/create',[BatchController::class, 'store'])->name('batch.store');
+        Route::get('/batches/update/{id}',[BatchController::class, 'edit'])->name('batch.edit');
+        Route::post('/batches/update/{id}',[BatchController::class, 'update'])->name('batch.update');
+        Route::get('/batches/delete',[BatchController::class, 'destroy'])->name('batch.delete');
+
+        //Students
+        Route::get('/students',[StudentController::class, 'index'])->name('students');
+        Route::get('/students/create',[StudentController::class, 'create'])->name('student.create');
+        Route::post('/students/create',[StudentController::class, 'store'])->name('student.store');
+        Route::get('/students/update/{id}',[StudentController::class, 'edit'])->name('student.edit');
+        Route::post('/students/update/{id}',[StudentController::class, 'update'])->name('student.update');
+        Route::get('/students/delete',[StudentController::class, 'destroy'])->name('student.delete');
+
+        //Grade Categories
+        Route::get('/gradecategories',[GradeCategoryController::class, 'index'])->name('grade.categories');
+        Route::get('/gradecategories/create',[GradeCategoryController::class, 'create'])->name('gc.create');
+        Route::post('/gradecategories/create',[GradeCategoryController::class, 'store'])->name('gc.store');
+        Route::get('/gradecategories/{id}',[GradeCategoryController::class, 'edit'])->name('gc.edit');
+        Route::post('/gradecategories/{id}',[GradeCategoryController::class, 'update'])->name('gc.update');
+        Route::get('/gradecategories/delete',[GradeCategoryController::class, 'destroy'])->name('gc.delete');
+
+        //Mark Distribution
+        Route::get('/markdistributions',[MarkDistributionController::class, 'index'])->name('mds');
+        Route::get('/markdistributions/create',[GradeCategoryController::class, 'create'])->name('md.create');
+        Route::post('/markdistributions/create',[GradeCategoryController::class, 'store'])->name('md.store');
+        Route::get('/markdistributions/{id}',[GradeCategoryController::class, 'edit'])->name('md.edit');
+        Route::post('/markdistributions/{id}',[GradeCategoryController::class, 'update'])->name('md.update');
+        Route::get('/markdistributions/delete',[GradeCategoryController::class, 'destroy'])->name('md.delete');
+
+        Route::get('/present',[AttendanceController::class, 'toggle'])->name('attendance.take');
+        Route::match(['get', 'post'],'/attendance',[AttendanceController::class, 'store'])->name('attendance');
+        // Route::get('/attendance/update/{id}',[AttendanceController::class, 'edit'])->name('attendance.edit');
+        // Route::post('/attendance/update/{id}',[AttendanceController::class, 'update'])->name('attendance.update');
+
+        Route::get('/attendance/delete/{id}',[AttendanceController::class, 'destroy'])->name('attendance.delete');
+        Route::get('/get-batches/{id}', function ($id) {
+            return json_encode(App\Models\Batch::where('department_id', $id)->get());
+        });
+});
+

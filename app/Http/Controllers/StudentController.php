@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Student;
+use App\Models\Department;
+use App\Models\Batch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 
 class StudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -24,7 +25,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $batches=Batch::with('department')->get();
+        return view('students.create', compact('batches'));
     }
 
     /**
@@ -35,7 +37,39 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'session' => 'required',
+            'roll' => 'required',
+            'reg_no' => 'required',
+            'batch_id' => 'nullable',
+            'email' => 'nullable|email',
+            'address' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $student = new Student;
+            $student -> name = $request -> name;
+            $student -> roll = $request -> roll;
+            $student -> reg_no = $request -> reg_no;
+            $student -> session = $request -> session;
+            $student -> email = $request -> email;
+            $student -> address = $request -> address;
+            $student -> batch_id = $request -> batch_id;
+            if(!is_null($request -> batch_id)){
+                $batch = Batch::find($request -> batch_id);
+                $student -> department_id = $batch -> department_id;
+            }
+            $student -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('student.create');
+        }
+        session()->flash('success', 'The student has been created successfully!!');
+        return redirect()->route('student.create');
     }
 
     /**
@@ -55,9 +89,11 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
-    {
-        //
+    public function edit($id) {
+
+        $student = Student::find($id);
+        $batches=Batch::with('department')->get();
+        return view('students.edit', compact(['student','batches']));
     }
 
     /**
@@ -67,9 +103,41 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'session' => 'required',
+            'roll' => 'required',
+            'reg_no' => 'required',
+            'batch_id' => 'nullable',
+            'email' => 'nullable|email',
+            'address' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $student = Student::find($id);
+            $student -> name = $request -> name;
+            $student -> roll = $request -> roll;
+            $student -> reg_no = $request -> reg_no;
+            $student -> session = $request -> session;
+            $student -> email = $request -> email;
+            $student -> address = $request -> address;
+            $student -> batch_id = $request -> batch_id;
+            if(!is_null($request -> batch_id)){
+                $batch = Batch::find($request -> batch_id);
+                $student -> department_id = $batch -> department_id;
+            }
+            $student -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('student.edit',$id);
+        }
+        session()->flash('success', 'The Student has been updated successfully!!');
+        return redirect()->route('students');
     }
 
     /**
@@ -78,8 +146,12 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Request  $request)
     {
-        //
+        $student = Student::find($request->id);
+        $student ->delete();
+        session()->flash('success', 'The Student has been deleted successfully!!');
+        $reponse = array('status' => true);
+        return json_encode($reponse);
     }
 }

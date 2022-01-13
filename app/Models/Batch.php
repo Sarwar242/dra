@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Batch extends Model
 {
     use HasFactory;
+    public $fillable = [
+        'name', 'session', 'department_id',
+    ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

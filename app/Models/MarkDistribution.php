@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MarkDistribution extends Model
 {
     use HasFactory;
+    public $fillable = [
+        'title', 'mark'
+    ];
 }

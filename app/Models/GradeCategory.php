@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GradeCategory extends Model
 {
     use HasFactory;
+    public $fillable = [
+        'name', 'mark'
+    ];
 }

@@ -12,19 +12,19 @@
     </a>
     <ul class="treeview-menu">
         <li>
-            <a  href="/courses">
+            <a  href="{{ route('courses') }}">
                 <i class="fa fa-book"></i>
                 <span>Courses</span>
             </a>
         </li>
         <li>
-            <a  href="/departments">
+            <a  href="{{ route('departments') }}">
                 <i class="fa fa-building-o"></i>
                 <span>Departments</span>
             </a>
         </li>
         <li>
-            <a  href="/batches">
+            <a  href="{{ route('batches') }}">
                 <i class="fa fa-sitemap"></i>
                 <span>Batches</span>
             </a>
@@ -32,19 +32,19 @@
     </ul>
 </li>
 <li class="treeview">
-    <a href="/students">
+    <a href="{{ route('students') }}">
         <i class="fa fa-users"></i>
         <span>Students</span>
     </a>
 </li>
-<li class="treeview">
+{{-- <li class="treeview">
     <a href="/teachers">
         <i class="fa fa-users"></i>
         <span>Teachers</span>
     </a>
-</li>
+</li> --}}
 <li class="treeview">
-    <a href="/exams">
+    <a href="/examinations">
         <i class="fa fa-pencil"></i>
         <span>Exams</span>
         <i class="fa fa-angle-left pull-right"></i>
@@ -57,7 +57,7 @@
             </a>
         </li>
         <li>
-            <a  href="/departments">
+            <a  href="/marks">
                 <i class="fa fa-pencil-square-o"></i>
                 <span>Marks Input</span>
             </a>
@@ -69,13 +69,13 @@
             </a>
         </li>
         <li>
-            <a  href="/grade/categories">
+            <a  href="{{ route('grade.categories') }}">
                 <i class="fa fa-signal"></i>
                 <span>Grade Categories</span>
             </a>
         </li>
         <li>
-            <a  href="/grades">
+            <a  href="/mark/distribution">
                 <i class="fa fa-pencil-square-o"></i>
                 <span>Mark Distribution</span>
             </a>

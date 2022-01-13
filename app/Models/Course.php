@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+    public $fillable = [
+        'name', 'code','credit'
+    ];
 }
