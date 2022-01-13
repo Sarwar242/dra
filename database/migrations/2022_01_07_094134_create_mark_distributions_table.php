@@ -16,6 +16,7 @@ class CreateMarkDistributionsTable extends Migration
         Schema::create('mark_distributions', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->double('mark', 10, 2)->nullable();
             $table->timestamps();
         });
     }

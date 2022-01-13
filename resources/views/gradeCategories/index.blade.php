@@ -36,11 +36,11 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-8 title-bar">
-                <h1><i class="fa fa-building-o"></i> Departments</h1>
+                <h1><i class="fa fa-building-o"></i> GradeCategories</h1>
             </div>
 
             <div class="col-xs-12 col-md-4 text-right">
-                <a class="btn btn-primary" href="{{ route('department.create') }}"><i class="fa fa-plus"></i> Add New</a>
+                <a class="btn btn-primary" href="{{ route('gc.create') }}"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
             <div class="col-xs-12 rms-data-table">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Departments List</h3>
+                        <h3 class="box-title">GradeCategories List</h3>
                     </div>
 
                     <div class="box-body table-responsive no-padding">
@@ -57,17 +57,17 @@
                             <tr>
                                 <th class="text-center" width="60px">#</th>
                                 <th>Name</th>
-                                <th>Faculty Name</th>
+                                <th>Mark</th>
                                 <th class="text-center" width="100px" >Action</th>
                             </tr>
-                            @foreach($departments as $department)
+                            @foreach($gradeCategories as $gradeCategory)
                                 <tr>
                                     <td  class="text-center">{{ $loop->index+1 }}</td>
-                                    <td>{{ $department->name }}</td>
-                                    <td>{{ $department->faculty }}</td>
+                                    <td>{{ $gradeCategory->name }}</td>
+                                    <td>{{ $gradeCategory->mark }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-sm btn-info"  href="{{ route('department.edit', $department->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-sm btn-danger deleteDepartment"data-id="{{ $department->id }}" id="departmentId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
+                                        <a class="btn btn-sm btn-info"  href="{{ route('gc.edit', $gradeCategory->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-sm btn-danger deleteGradeCategory"data-id="{{ $gradeCategory->id }}" id="gradeCategoryId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,16 +90,16 @@
             e.preventDefault();
             var link = jQuery(this).get(0).href;
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "departments/" + value);
+            jQuery("#searchList").attr("action", baseURL + "grade/categories/" + value);
             jQuery("#searchList").submit();
         });
 
         /**
         ** For Delete
         **/
-        jQuery(document).on("click", ".deleteDepartment", function(){
+        jQuery(document).on("click", ".deleteGradeCategory", function(){
             var Id = $(this).data("id"),
-            hitURL = "/department/delete",
+            hitURL = "/grade/category/delete",
             currentRow = $(this);
             var confirmation = confirm("Are you sure want to delete ?");
 
@@ -113,8 +113,8 @@
                 }).done(function(data){
                     console.log(data);
                     currentRow.parents('tr').remove();
-                    if(data.status = true) { console.log("Department successfully deleted"); }
-                    else if(data.status = false) { console.log("Department delete failed"); }
+                    if(data.status = true) { console.log("GradeCategory successfully deleted"); }
+                    else if(data.status = false) { console.log("GradeCategory delete failed"); }
                     else { alert("Access denied..!"); }
                     location.reload();
                 });

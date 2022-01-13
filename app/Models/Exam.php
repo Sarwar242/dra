@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Exam extends Model
 {
     use HasFactory;
-    
+    public $fillable = [
+        'name', 'year', 'batch_id', 'status'
+    ];
 }

@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $departments = Department::all();
+        return view('departments.index', compact('departments'));
     }
 
     /**
@@ -24,7 +25,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('departments.add');
     }
 
     /**
@@ -35,7 +36,25 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'faculty' => 'required',
+        ]);
+        DB::beginTransaction();
+        try {
+            $department = new Department;
+            $department -> name = $request -> name;
+            $department -> faculty = $request -> faculty;
+            $department -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('department.create');
+        }
+        session()->flash('success', 'The department has been created successfully!!');
+        return redirect()->route('department.create');
     }
 
     /**
@@ -55,9 +74,11 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
-    {
-        //
+    public function edit($id) {
+
+        $department = Department::find($id);
+
+        return view('departments.edit', compact('department'));
     }
 
     /**
@@ -67,9 +88,27 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'faculty' => 'required',
+        ]);
+        DB::beginTransaction();
+        try {
+            $department = Department::find($id);
+            $department -> name = $request -> name;
+            $department -> faculty = $request -> faculty;
+            $department -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('department.edit',$id);
+        }
+        session()->flash('success', 'The Department has been updated successfully!!');
+        return redirect()->route('departments');
     }
 
     /**
@@ -78,8 +117,13 @@ class DepartmentController extends Controller
      * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Request $request)
     {
-        //
+
+        $department = Department::find($request->id);
+        $department ->delete();
+        $reponse = array('status' => true);
+        session()->flash('success', 'The Department has been deleted successfully!!');
+        return json_encode($reponse);
     }
 }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 class CourseController extends Controller
 {
     /**
@@ -14,7 +17,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::all();
+        return view('courses.index', compact('courses'));
     }
 
     /**
@@ -24,7 +28,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     /**
@@ -35,7 +39,27 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'code' => 'required',
+            'credit' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $course = new Course;
+            $course -> name = $request -> name;
+            $course -> code = $request -> code;
+            $course -> credit = $request -> credit;
+            $course -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('course.create');
+        }
+        session()->flash('success', 'The course has been created successfully!!');
+        return redirect()->route('course.create');
     }
 
     /**
@@ -55,9 +79,11 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
-    {
-        //
+    public function edit($id) {
+
+        $course = Course::find($id);
+
+        return view('courses.edit', compact('course'));
     }
 
     /**
@@ -67,9 +93,29 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'code' => 'required',
+            'credit' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $course = Course::find($id);
+            $course -> name = $request -> name;
+            $course -> code = $request -> code;
+            $course -> credit = $request -> credit;
+            $course -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('course.edit',$id);
+        }
+        session()->flash('success', 'The Course has been updated successfully!!');
+        return redirect()->route('courses');
     }
 
     /**
@@ -78,8 +124,12 @@ class CourseController extends Controller
      * @param  \App\Models\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy(Request $request)
     {
-        //
+        $course = Course::find($request->id);
+        $course ->delete();
+        session()->flash('success', 'The Course has been deleted successfully!!');
+        $reponse = array('status' => true);
+        return json_encode($reponse);
     }
 }

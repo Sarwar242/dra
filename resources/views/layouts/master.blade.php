@@ -20,7 +20,7 @@
     <link href="/sumoselect.min.css" rel="stylesheet" type="text/css" />
     <link href="/custom.css" rel="stylesheet" type="text/css" />
 
-
+    @yield('css')
 
     <style>
     	.error{
@@ -139,13 +139,14 @@
     <script src="/js/jquery.validate.js" type="text/javascript"></script>
     <script src="/js/validation.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var windowURL = window.location.href;
-        pageURL = windowURL.substring(0, windowURL.lastIndexOf('/'));
-
+        var windowURL = `${location.protocol}//${location.host}/${location.pathname.split('/')[1]}`;
+        pageURL = windowURL.substring(windowURL.lastIndexOf('/'), -1);
+        console.log(windowURL);
         var x= $('a[href="'+windowURL+'"]');
             x.addClass('active');
             x.parent().addClass('active');
             x.parent().parent().parent().addClass('active');
     </script>
+     @yield('script')
   </body>
 </html>
