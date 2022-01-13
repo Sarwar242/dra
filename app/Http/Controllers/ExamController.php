@@ -3,83 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\Batch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 
 class ExamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $exams = Exam::all();
+        return view('exams.index', compact('exams'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $batches = Batch::all();
+        return view('exams.create', compact('batches'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string',
+            'year' => 'required',
+            'batch_id' => 'nullable',
+            'status' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $exam = new Exam;
+            $exam -> name = $request -> name;
+            $exam -> year = $request -> year;
+            $exam -> batch_id = $request -> batch_id;
+            $exam -> status = $request -> status;
+            $exam -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('exam.create');
+        }
+        session()->flash('success', 'The Exam has been created successfully!!');
+        return redirect()->route('exam.create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Exam $exam)
-    {
-        //
+    public function edit($id) {
+
+        $exam = Exam::find($id);
+        $batches = Batch::all();
+        return view('exams.edit', compact(['exam','batches']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Exam $exam)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'year' => 'required',
+            'batch_id' => 'nullable',
+            'status' => 'nullable',
+        ]);
+        DB::beginTransaction();
+        try {
+            $exam = Exam::find($id);
+            $exam -> name = $request -> name;
+            $exam -> year = $request -> year;
+            $exam -> batch_id = $request -> batch_id;
+            $exam -> status = $request -> status;
+            $exam -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('exam.edit',$id);
+        }
+        session()->flash('success', 'The Exam has been updated successfully!!');
+        return redirect()->route('exams');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Exam $exam)
+    public function destroy(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Exam  $exam
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Exam $exam)
-    {
-        //
+        $exam = Exam::find($request->id);
+        $exam ->delete();
+        session()->flash('success', 'The Exam has been deleted successfully!!');
+        $reponse = array('status' => true);
+        return json_encode($reponse);
     }
 }

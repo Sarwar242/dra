@@ -6,4 +6,7 @@ class Helper {
     public function faculties(){
         return array("Science and Engineering", "Bio-Sciences", "Business Studies", "Social Sciences","Arts and Humanities", "Law");
     }
+    public function statuses(){
+        return array("Pending", "Completed", "Cancelled");
+    }
 }

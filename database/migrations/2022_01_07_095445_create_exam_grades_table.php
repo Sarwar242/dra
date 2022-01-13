@@ -18,8 +18,8 @@ class CreateExamGradesTable extends Migration
             $table->string('name');
             $table->unSignedBigInteger('grade_category_id')->nullable();
             $table->string('grade_point');
-            $table->string('point_from');
-            $table->string('point_to');
+            $table->string('point_from')->nullable();
+            $table->string('point_to')->nullable();
             $table->string('mark_from');
             $table->string('mark_upto');
             $table->string('comment')->nullable();

@@ -11,4 +11,7 @@ class Exam extends Model
     public $fillable = [
         'name', 'year', 'batch_id', 'status'
     ];
+    public function batch(){
+        return $this->belongsTo(Batch::class);
+    }
 }

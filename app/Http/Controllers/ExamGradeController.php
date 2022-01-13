@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExamGrade;
+use App\Models\GradeCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 
 class ExamGradeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $grades = ExamGrade::all();
+        return view('examGrades.index', compact('grades'));
     }
 
     /**
@@ -24,7 +25,8 @@ class ExamGradeController extends Controller
      */
     public function create()
     {
-        //
+        $gcs = GradeCategory::all();
+        return view('examGrades.create', compact('gcs'));
     }
 
     /**
@@ -35,19 +37,38 @@ class ExamGradeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string',
+            'grade_point' => 'required',
+            'point_from' => 'nullable',
+            'point_to' => 'nullable',
+            'mark_from' => 'required',
+            'mark_upto' => 'required',
+            'comment' => 'nullable',
+            'grade_category_id' => 'required',
+        ]);
+        DB::beginTransaction();
+        try {
+            $examGrade = new ExamGrade;
+            $examGrade -> name = $request -> name;
+            $examGrade -> grade_point = $request -> grade_point;
+            $examGrade -> point_from = $request -> point_from;
+            $examGrade -> point_to = $request -> point_to;
+            $examGrade -> mark_from = $request -> mark_from;
+            $examGrade -> mark_upto = $request -> mark_upto;
+            $examGrade -> comment = $request -> comment;
+            $examGrade -> grade_category_id = $request -> grade_category_id;
+            $examGrade -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('grade.create');
+        }
+        session()->flash('success', 'The Grade has been created successfully!!');
+        return redirect()->route('grade.create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ExamGrade  $examGrade
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ExamGrade $examGrade)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -55,9 +76,11 @@ class ExamGradeController extends Controller
      * @param  \App\Models\ExamGrade  $examGrade
      * @return \Illuminate\Http\Response
      */
-    public function edit(ExamGrade $examGrade)
-    {
-        //
+    public function edit($id) {
+
+        $grade = ExamGrade::find($id);
+        $gcs = GradeCategory::all();
+        return view('examGrades.edit', compact(['grade','gcs']));
     }
 
     /**
@@ -67,9 +90,35 @@ class ExamGradeController extends Controller
      * @param  \App\Models\ExamGrade  $examGrade
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExamGrade $examGrade)
+    public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required|string',
+            'grade_point' => 'required',
+            'mark_from' => 'required',
+            'mark_upto' => 'required',
+            'comment' => 'nullable',
+            'grade_category_id' => 'required',
+        ]);
+        DB::beginTransaction();
+        try {
+            $examGrade = ExamGrade::find($id);
+            $examGrade -> name = $request -> name;
+            $examGrade -> grade_point = $request -> grade_point;
+            $examGrade -> mark_from = $request -> mark_from;
+            $examGrade -> mark_upto = $request -> mark_upto;
+            $examGrade -> comment = $request -> comment;
+            $examGrade -> grade_category_id = $request -> grade_category_id;
+            $examGrade -> save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            session()->flash('failed', 'Something went wrong!!');
+            return redirect()->route('grade.edit',$id);
+        }
+        session()->flash('success', 'The Grade has been updated successfully!!');
+        return redirect()->route('grades');
     }
 
     /**
@@ -78,8 +127,12 @@ class ExamGradeController extends Controller
      * @param  \App\Models\ExamGrade  $examGrade
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExamGrade $examGrade)
+    public function destroy(Request $request)
     {
-        //
+        $examGrade = ExamGrade::find($request->id);
+        $examGrade ->delete();
+        session()->flash('success', 'The Grade has been deleted successfully!!');
+        $reponse = array('status' => true);
+        return json_encode($reponse);
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
-        <h1><i class="fa fa-building-o"></i> Batches <small> Update Batch </small></h1>
+        <h1><i class="fa fa-building-o"></i> Grades <small> Update Grade </small></h1>
     </section>
     <section class="content">
 
@@ -49,15 +49,15 @@
                 <div class="box box-primary">
 
                     <!-- form start -->
-                    <form role="form" id="addUser" class="form-horizontal" action="{{ route('batch.update', $batch->id) }}" method="post">
+                    <form role="form" id="addUser" class="form-horizontal" action="{{ route('grade.update', $grade->id) }}" method="post">
                         @csrf
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="field_id_name" class="col-sm-4 control-label">Name</label>
+                                        <label for="name" class="col-sm-4 control-label">Name</label>
                                         <div class="col-sm-8">
-                                            <input type="text" value="{{ $batch->name }}" class="form-control required" id="field_id_name" name="name" >
+                                            <input type="text" class="form-control required" value="{{ $grade->name }}"id="name" name="name" >
                                         </div>
                                     </div>
                                 </div>
@@ -65,9 +65,31 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="session" class="col-sm-4 control-label">Session</label>
+                                        <label for="grade_point" class="col-sm-4 control-label">Grade Point</label>
                                         <div class="col-sm-8">
-                                            <input type="text" name="session" value="{{ $batch->session }}" class="form-control" id="session" required>
+                                            <input type="number" class="form-control required" value="{{ $grade->grade_point }}" id="grade_point" name="grade_point" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mark_from" class="col-sm-4 control-label">Mark From</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" class="form-control required"  value="{{ $grade->mark_from }}" id="mark_from" name="mark_from" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mark_upto" class="col-sm-4 control-label">Mark Upto</label>
+                                        <div class="col-sm-8">
+                                            <input type="number"  value="{{ $grade->mark_upto }}" class="form-control required" id="mark_upto" name="mark_upto" >
                                         </div>
                                     </div>
                                 </div>
@@ -75,12 +97,24 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="department" class="col-sm-4 control-label">Department</label>
+                                        <label for="comment" class="col-sm-4 control-label">Comment</label>
                                         <div class="col-sm-8">
-                                            <select class="form-control selectpicker" name="department_id" id="department" required>
+                                            <input type="text" value="{{ $grade->comment }}" class="form-control required" id="comment" name="comment" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="grade_category" class="col-sm-4 control-label">Grade Category</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control selectpicker" name="grade_category_id" id="grade_category" required>
                                                 <option value="" disabled>Select One</option>
-                                                @foreach ($departments as $department)
-                                                    <option value="{{ $department->id }}" {{ $department->id==$batch->department_id? 'selected':'' }}>{{ $department->name }}</option>
+                                                @foreach ($gcs as $gc)
+                                                    <option value="{{ $gc->id }}" {{ $gc->id==$grade->grade_category_id? 'selected':'' }}>{{ $gc->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -97,7 +131,7 @@
                                         <div class="col-sm-8">
 
                                             <input type="submit" class="btn btn-primary" value="Update" />
-                                            <a class="btn  btn-default" href="{{ route('batches') }}" title="Cancel"> Cancel </a>
+                                            <a class="btn  btn-default" href="{{ route('grades') }}" title="Cancel"> Cancel </a>
                                         </div>
                                     </div>
                                 </div>

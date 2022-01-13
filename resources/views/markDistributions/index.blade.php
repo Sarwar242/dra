@@ -40,7 +40,7 @@
             </div>
 
             <div class="col-xs-12 col-md-4 text-right">
-                <a class="btn btn-primary" href="{{ route('gc.create') }}"><i class="fa fa-plus"></i> Add New</a>
+                <a class="btn btn-primary" href="{{ route('md.create') }}"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
 
@@ -56,18 +56,18 @@
                         <table id="dataTable" class="table table-hover rms-table">
                             <tr>
                                 <th class="text-center" width="60px">#</th>
-                                <th>Name</th>
+                                <th>Title</th>
                                 <th>Mark</th>
                                 <th class="text-center" width="100px" >Action</th>
                             </tr>
                             @foreach($markDistributions as $markDistribution)
                                 <tr>
                                     <td  class="text-center">{{ $loop->index+1 }}</td>
-                                    <td>{{ $markDistribution->name }}</td>
+                                    <td>{{ $markDistribution->title }}</td>
                                     <td>{{ $markDistribution->mark }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-sm btn-info"  href="{{ route('gc.edit', $markDistribution->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-sm btn-danger deleteMarkDistribution"data-id="{{ $markDistribution->id }}" id="markDistributionId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
+                                        <a class="btn btn-sm btn-info"  href="{{ route('md.edit', $markDistribution->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-sm btn-danger deleteMarkDistribution" data-id="{{ $markDistribution->id }}" id="markDistributionId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,7 +90,7 @@
             e.preventDefault();
             var link = jQuery(this).get(0).href;
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "grade/categories/" + value);
+            jQuery("#searchList").attr("action", baseURL + "markdistributions/" + value);
             jQuery("#searchList").submit();
         });
 
@@ -99,7 +99,7 @@
         **/
         jQuery(document).on("click", ".deleteMarkDistribution", function(){
             var Id = $(this).data("id"),
-            hitURL = "/grade/category/delete",
+            hitURL = "/markdistributions/delete",
             currentRow = $(this);
             var confirmation = confirm("Are you sure want to delete ?");
 

@@ -51,21 +51,21 @@
     </a>
     <ul class="treeview-menu">
         <li>
-            <a  href="/exams">
+            <a  href="{{ route('exams') }}">
                 <i class="fa fa-pencil"></i>
                 <span>Exams</span>
             </a>
         </li>
         <li>
-            <a  href="/marks">
+            <a  href="{{ route('marks') }}">
                 <i class="fa fa-pencil-square-o"></i>
                 <span>Marks Input</span>
             </a>
         </li>
         <li>
-            <a  href="/grades">
+            <a  href="{{ route('grades') }}">
                 <i class="fa fa-signal"></i>
-                <span>Grade</span>
+                <span>Grades</span>
             </a>
         </li>
         <li>
@@ -75,9 +75,9 @@
             </a>
         </li>
         <li>
-            <a  href="/mark/distribution">
+            <a  href="{{ route('mds') }}">
                 <i class="fa fa-pencil-square-o"></i>
-                <span>Mark Distribution</span>
+                <span>Mark Distributions</span>
             </a>
         </li>
     </ul>

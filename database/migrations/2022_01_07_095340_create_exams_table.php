@@ -17,7 +17,7 @@ class CreateExamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('year')->nullable();
-            $table->boolean('status')->nullable();
+            $table->string('status')->nullable();
             $table->unSignedBigInteger('batch_id')->nullable();
             $table->timestamps();
             $table->foreign('batch_id')->references('id')->on('batches')->onDelete('cascade');

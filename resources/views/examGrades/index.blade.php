@@ -36,11 +36,11 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-8 title-bar">
-                <h1><i class="fa fa-building-o"></i> GradeCategories</h1>
+                <h1><i class="fa fa-building-o"></i> Grades</h1>
             </div>
 
             <div class="col-xs-12 col-md-4 text-right">
-                <a class="btn btn-primary" href="{{ route('gc.create') }}"><i class="fa fa-plus"></i> Add New</a>
+                <a class="btn btn-primary" href="{{ route('grade.create') }}"><i class="fa fa-plus"></i> Add New</a>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
             <div class="col-xs-12 rms-data-table">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">GradeCategories List</h3>
+                        <h3 class="box-title">Grades List</h3>
                     </div>
 
                     <div class="box-body table-responsive no-padding">
@@ -57,17 +57,25 @@
                             <tr>
                                 <th class="text-center" width="60px">#</th>
                                 <th>Name</th>
-                                <th>Mark</th>
+                                <th>Grade Point</th>
+                                <th>Mark From</th>
+                                <th>Mark Upto</th>
+                                <th>Comment</th>
+                                <th>Grade Category</th>
                                 <th class="text-center" width="100px" >Action</th>
                             </tr>
-                            @foreach($gradeCategories as $gradeCategory)
+                            @foreach($grades as $grade)
                                 <tr>
                                     <td  class="text-center">{{ $loop->index+1 }}</td>
-                                    <td>{{ $gradeCategory->name }}</td>
-                                    <td>{{ $gradeCategory->mark }}</td>
+                                    <td>{{ $grade->name }}</td>
+                                    <td>{{ $grade->grade_point }}</td>
+                                    <td>{{ $grade->mark_from }}</td>
+                                    <td>{{ $grade->mark_upto }}</td>
+                                    <td>{{ $grade->comment }}</td>
+                                    <td>{{ $grade->grade_category->name }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-sm btn-info"  href="{{ route('gc.edit', $gradeCategory->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <button class="btn btn-sm btn-danger deleteGradeCategory" data-id="{{ $gradeCategory->id }}" id="gradeCategoryId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
+                                        <a class="btn btn-sm btn-info"  href="{{ route('grade.edit', $grade->id) }}" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <button class="btn btn-sm btn-danger deleteMarkDistribution" data-id="{{ $grade->id }}" id="markDistributionId" name="Id" title="Delete"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,16 +98,16 @@
             e.preventDefault();
             var link = jQuery(this).get(0).href;
             var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "gradecategories/" + value);
+            jQuery("#searchList").attr("action", baseURL + "grades/" + value);
             jQuery("#searchList").submit();
         });
 
         /**
         ** For Delete
         **/
-        jQuery(document).on("click", ".deleteGradeCategory", function(){
+        jQuery(document).on("click", ".deleteMarkDistribution", function(){
             var Id = $(this).data("id"),
-            hitURL = "/gradecategories/delete",
+            hitURL = "/grades/delete",
             currentRow = $(this);
             var confirmation = confirm("Are you sure want to delete ?");
 
@@ -113,8 +121,8 @@
                 }).done(function(data){
                     console.log(data);
                     currentRow.parents('tr').remove();
-                    if(data.status = true) { console.log("GradeCategory successfully deleted"); }
-                    else if(data.status = false) { console.log("GradeCategory delete failed"); }
+                    if(data.status = true) { console.log("Grade successfully deleted"); }
+                    else if(data.status = false) { console.log("Grade delete failed"); }
                     else { alert("Access denied..!"); }
                     location.reload();
                 });

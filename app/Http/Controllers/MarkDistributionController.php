@@ -36,6 +36,7 @@ class MarkDistributionController extends Controller
     public function store(Request $request)
     {
 
+
         $this->validate($request,[
             'title' => 'required|string',
             'mark' => 'required',

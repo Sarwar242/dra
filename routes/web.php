@@ -78,17 +78,41 @@ Route::group(['middleware'=>'auth'], function (){
         Route::get('/gradecategories',[GradeCategoryController::class, 'index'])->name('grade.categories');
         Route::get('/gradecategories/create',[GradeCategoryController::class, 'create'])->name('gc.create');
         Route::post('/gradecategories/create',[GradeCategoryController::class, 'store'])->name('gc.store');
-        Route::get('/gradecategories/{id}',[GradeCategoryController::class, 'edit'])->name('gc.edit');
-        Route::post('/gradecategories/{id}',[GradeCategoryController::class, 'update'])->name('gc.update');
+        Route::get('/gradecategories/update/{id}',[GradeCategoryController::class, 'edit'])->name('gc.edit');
+        Route::post('/gradecategories/update/{id}',[GradeCategoryController::class, 'update'])->name('gc.update');
         Route::get('/gradecategories/delete',[GradeCategoryController::class, 'destroy'])->name('gc.delete');
 
         //Mark Distribution
         Route::get('/markdistributions',[MarkDistributionController::class, 'index'])->name('mds');
-        Route::get('/markdistributions/create',[GradeCategoryController::class, 'create'])->name('md.create');
-        Route::post('/markdistributions/create',[GradeCategoryController::class, 'store'])->name('md.store');
-        Route::get('/markdistributions/{id}',[GradeCategoryController::class, 'edit'])->name('md.edit');
-        Route::post('/markdistributions/{id}',[GradeCategoryController::class, 'update'])->name('md.update');
-        Route::get('/markdistributions/delete',[GradeCategoryController::class, 'destroy'])->name('md.delete');
+        Route::get('/markdistributions/create',[MarkDistributionController::class, 'create'])->name('md.create');
+        Route::post('/markdistributions/create',[MarkDistributionController::class, 'store'])->name('md.store');
+        Route::get('/markdistributions/update/{id}',[MarkDistributionController::class, 'edit'])->name('md.edit');
+        Route::post('/markdistributions/update/{id}',[MarkDistributionController::class, 'update'])->name('md.update');
+        Route::get('/markdistributions/delete',[MarkDistributionController::class, 'destroy'])->name('md.delete');
+
+        //Exam Grades
+        Route::get('/grades',[ExamGradeController::class, 'index'])->name('grades');
+        Route::get('/grades/create',[ExamGradeController::class, 'create'])->name('grade.create');
+        Route::post('/grades/create',[ExamGradeController::class, 'store'])->name('grade.store');
+        Route::get('/grades/update/{id}',[ExamGradeController::class, 'edit'])->name('grade.edit');
+        Route::post('/grades/update/{id}',[ExamGradeController::class, 'update'])->name('grade.update');
+        Route::get('/grades/delete',[ExamGradeController::class, 'destroy'])->name('grade.delete');
+
+        //Exams
+        Route::get('/exams',[ExamController::class, 'index'])->name('exams');
+        Route::get('/exams/create',[ExamController::class, 'create'])->name('exam.create');
+        Route::post('/exams/create',[ExamController::class, 'store'])->name('exam.store');
+        Route::get('/exams/update/{id}',[ExamController::class, 'edit'])->name('exam.edit');
+        Route::post('/exams/update/{id}',[ExamController::class, 'update'])->name('exam.update');
+        Route::get('/exams/delete',[ExamController::class, 'destroy'])->name('exam.delete');
+
+        //Exam Marks
+        Route::get('/marks',[ExamMarkController::class, 'index'])->name('marks');
+        Route::get('/marks/create',[ExamMarkController::class, 'create'])->name('mark.create');
+        Route::post('/marks/create',[ExamMarkController::class, 'store'])->name('mark.store');
+        Route::get('/marks/update/{id}',[ExamMarkController::class, 'edit'])->name('mark.edit');
+        Route::post('/marks/update/{id}',[ExamMarkController::class, 'update'])->name('mark.update');
+        Route::get('/marks/delete',[ExamMarkController::class, 'destroy'])->name('mark.delete');
 
         Route::get('/present',[AttendanceController::class, 'toggle'])->name('attendance.take');
         Route::match(['get', 'post'],'/attendance',[AttendanceController::class, 'store'])->name('attendance');
