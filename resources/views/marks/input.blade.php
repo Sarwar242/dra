@@ -103,12 +103,11 @@
 @section('script')
 <script>
     function save(id){
-        console.log(event);
+
         var exam_id = $("#exam_id").val();
         var student_id = $("#student_id").val();
         var marks = $("#mark_"+id).val();
-        console.log(exam_id+student_id+marks);
-
+        var e = event.target;
         $.ajax({
          type:'POST',
          url:'/marks/save',
@@ -119,9 +118,9 @@
                     "course_id": id,
                     "marks": marks,
             },
-         success:function(data){
-            $("#msg").html(data.msg);
-            event.target.innerHTML='Saved';
+         success: function(data){
+            console.log(data);
+            e.innerHTML='Saved';
          }
       });
     }
