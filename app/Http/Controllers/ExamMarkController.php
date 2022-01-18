@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\ExamMark;
 use App\Models\Exam;
+use App\Models\ExamGrade;
+use App\Models\GradeCategory;
+use App\Models\MarkDistributionValue;
 use App\Models\Student;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Auth;
+use DB;
 class ExamMarkController extends Controller
 {
     /**
@@ -46,15 +52,23 @@ class ExamMarkController extends Controller
             'course_id' => 'required',
             'marks' => 'nullable',
         ]);
-        DB::beginTransaction();
+
         $student= Student::find($request->student_id);
         $department = $student->department_id;
         $exam= Exam::find($request->exam_id);
         $batch = $exam->batch_id;
+        $gc = ExamGrade::where('mark_upto', '>=', $request->marks)
+                        ->where('mark_from','<=', $request->marks)
+                        ->first();
+
+        $cgpa = is_null($gc)? '': $gc->grade_point;
+        info($cgpa);
+
         try {
+            \Log::warning($request -> course_id);
             $exammark = new ExamMark;
             $exammark -> exam_id = $request -> exam_id;
-            $exammark -> student_id = $request -> student_id;
+            $exammark -> student_id = $student -> id ;
             $exammark -> course_id = $request -> course_id;
             $exammark -> department_id = $department;
             $exammark -> batch_id = $batch;
@@ -62,14 +76,13 @@ class ExamMarkController extends Controller
             $exammark -> cgpa = $cgpa;
             $exammark -> user_id = auth()->user()->id;
             $exammark -> save();
-            DB::commit();
+
         } catch (\Exception $e) {
-            DB::rollback();
-            session()->flash('failed', 'Something went wrong!!');
-            return redirect()->route('exam.edit',$id);
+            $reponse = array('success' => false,
+                            'messages' =>$e);
         }
-        session()->flash('success', 'The Exam has been updated successfully!!');
-        $reponse = array('status' => true);
+        session()->flash('success', 'The Mark has been updated successfully!!');
+        $reponse = array('success' => true);
         return json_encode($reponse);
     }
 
