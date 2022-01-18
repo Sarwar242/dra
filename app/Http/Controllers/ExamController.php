@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exam;
+use App\Models\ExamCourse;
+use App\Models\Course;
+use App\Models\Student;
 use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +24,8 @@ class ExamController extends Controller
     public function create()
     {
         $batches = Batch::all();
-        return view('exams.create', compact('batches'));
+        $courses = Course::all();
+        return view('exams.create', compact(['batches','courses']));
     }
 
     public function store(Request $request)
@@ -31,6 +35,7 @@ class ExamController extends Controller
             'year' => 'required',
             'batch_id' => 'nullable',
             'status' => 'nullable',
+            'courses' => 'required|array',
         ]);
         DB::beginTransaction();
         try {
@@ -40,6 +45,13 @@ class ExamController extends Controller
             $exam -> batch_id = $request -> batch_id;
             $exam -> status = $request -> status;
             $exam -> save();
+
+            foreach ($request->courses as $course_id){
+                $courses = new ExamCourse;
+                $courses->exam_id = $exam -> id;
+                $courses->course_id = $course_id;
+                $courses -> save();
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -54,7 +66,8 @@ class ExamController extends Controller
 
         $exam = Exam::find($id);
         $batches = Batch::all();
-        return view('exams.edit', compact(['exam','batches']));
+        $courses = Course::all();
+        return view('exams.edit', compact(['exam','batches','courses']));
     }
 
     public function update(Request $request, $id)
@@ -65,6 +78,7 @@ class ExamController extends Controller
             'year' => 'required',
             'batch_id' => 'nullable',
             'status' => 'nullable',
+            'courses' => 'required|array',
         ]);
         DB::beginTransaction();
         try {
@@ -74,6 +88,15 @@ class ExamController extends Controller
             $exam -> batch_id = $request -> batch_id;
             $exam -> status = $request -> status;
             $exam -> save();
+            if(!is_null($exam -> courses()))
+                $exam -> courses() ->delete();
+
+            foreach ($request->courses as $course_id){
+                $courses = new ExamCourse;
+                $courses -> exam_id = $exam -> id;
+                $courses -> course_id = $course_id;
+                $courses -> save();
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -91,5 +114,16 @@ class ExamController extends Controller
         session()->flash('success', 'The Exam has been deleted successfully!!');
         $reponse = array('status' => true);
         return json_encode($reponse);
+    }
+    public function getCourses($id)
+    {
+        $courses = Course::join('exam_courses', 'exam_courses.course_id', '=', 'courses.id')
+                        ->where('exam_id',$id)->get();
+        return json_encode($courses);
+    }
+     public function getStudents($id)
+    {
+        $students = Student::where('batch_id', $id)->get();
+        return json_encode($students);
     }
 }

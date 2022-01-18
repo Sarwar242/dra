@@ -92,6 +92,30 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="batch" class="col-sm-4 control-label">Courses</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control selectpicker" data-live-search="true" name="courses[]" multiple aria-label="multiple select" required>
+                                                    @foreach($courses as $course)
+                                                    @php $check=0; @endphp
+                                                    @foreach($exam->courses() as $course2)
+                                                        @if ($course2->course_id == $course->id)
+                                                        <option value="{{$course->id}}" selected>{{$course->name}}</option>
+                                                        @php $check=1; @endphp
+                                                        @break
+                                                        @endif
+                                                    @endforeach
+                                                    @if ($check==0)
+                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="status" class="col-sm-4 control-label">Status</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control selectpicker" name="status" id="status" required>

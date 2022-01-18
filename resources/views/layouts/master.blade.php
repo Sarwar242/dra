@@ -6,6 +6,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Bootstrap 3.3.4 -->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- FontAwesome 4.3.0 -->
@@ -130,6 +131,8 @@
         <strong>Copyright &copy; DRA <a href="/">SARAH</a>.</strong> All rights reserved.
     </footer>
 
+    @include('layouts.modal0')
+
     <!-- jQuery UI 1.11.2 -->
     <!-- <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script> -->
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -147,6 +150,45 @@
             x.parent().addClass('active');
             x.parent().parent().parent().addClass('active');
     </script>
+
+
+<script>
+    $(document).on('change','#exam',function(){
+       var exam = $("#exam").val();
+       $("#course").html("");
+       var option = "";
+       //send an ajax req to servers
+       $.get("/exam/get-courses/" +
+       exam,
+       function(data) {
+         option = "<option selected disabled>Select one</option>";
+           var d = JSON.parse(data);
+           d.forEach(function(element) {
+               console.log(element.id);
+               option += "<option value='" + element.id + "'>" + element.name + "</option>";
+           });
+           $("#course").html(option);
+       });
+ });
+
+ $(document).on('change','#batch',function(){
+       var batch = $("#batch").val();
+       $("#student").html("");
+       var option = "";
+       //send an ajax req to servers
+       $.get("/exam/get-students/" +
+       batch,
+       function(data) {
+         option = "<option selected disabled>Select one</option>";
+           var d = JSON.parse(data);
+           d.forEach(function(element) {
+               console.log(element.id);
+               option += "<option value='" + element.id + "'>" + element.name + "</option>";
+           });
+           $("#student").html(option);
+       });
+ });
+ </script>
      @yield('script')
   </body>
 </html>
