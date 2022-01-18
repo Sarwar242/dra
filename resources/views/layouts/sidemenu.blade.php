@@ -57,7 +57,7 @@
             </a>
         </li>
         <li>
-            <a  href="{{ route('marks') }}">
+            <a href="{{ route('marks') }}" data-toggle="modal" style="cursor: pointer;"  id="mod" data-target="#modal0" class="nav-link">
                 <i class="fa fa-pencil-square-o"></i>
                 <span>Marks Input</span>
             </a>

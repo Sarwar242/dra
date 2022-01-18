@@ -105,11 +105,15 @@ Route::group(['middleware'=>'auth'], function (){
         Route::get('/exams/update/{id}',[ExamController::class, 'edit'])->name('exam.edit');
         Route::post('/exams/update/{id}',[ExamController::class, 'update'])->name('exam.update');
         Route::get('/exams/delete',[ExamController::class, 'destroy'])->name('exam.delete');
+        Route::get('/exam/get-courses/{id}',[ExamController::class, 'getCourses']);
+        Route::get('/exam/get-students/{id}',[ExamController::class, 'getStudents']);
 
         //Exam Marks
         Route::get('/marks',[ExamMarkController::class, 'index'])->name('marks');
         Route::get('/marks/create',[ExamMarkController::class, 'create'])->name('mark.create');
         Route::post('/marks/create',[ExamMarkController::class, 'store'])->name('mark.store');
+        Route::post('/marks/input',[ExamMarkController::class, 'input'])->name('mark.input');
+        Route::post('/marks/save',[ExamMarkController::class, 'save'])->name('mark.save');
         Route::get('/marks/update/{id}',[ExamMarkController::class, 'edit'])->name('mark.edit');
         Route::post('/marks/update/{id}',[ExamMarkController::class, 'update'])->name('mark.update');
         Route::get('/marks/delete',[ExamMarkController::class, 'destroy'])->name('mark.delete');
