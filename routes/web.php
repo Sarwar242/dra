@@ -13,6 +13,7 @@ use App\Http\Controllers\ExamMarkController;
 use App\Http\Controllers\MarkDistributionController;
 use App\Http\Controllers\MarkDistributionValueController;
 use App\Http\Controllers\RankController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
@@ -110,13 +111,17 @@ Route::group(['middleware'=>'auth'], function (){
 
         //Exam Marks
         Route::get('/marks',[ExamMarkController::class, 'index'])->name('marks');
-        Route::get('/marks/create',[ExamMarkController::class, 'create'])->name('mark.create');
-        Route::post('/marks/create',[ExamMarkController::class, 'store'])->name('mark.store');
         Route::post('/marks/input',[ExamMarkController::class, 'input'])->name('mark.input');
         Route::post('/marks/save',[ExamMarkController::class, 'save'])->name('mark.save');
         Route::get('/marks/update/{id}',[ExamMarkController::class, 'edit'])->name('mark.edit');
         Route::post('/marks/update/{id}',[ExamMarkController::class, 'update'])->name('mark.update');
         Route::get('/marks/delete',[ExamMarkController::class, 'destroy'])->name('mark.delete');
+
+        //Exam Result
+        Route::get('/results',[ResultController::class, 'index'])->name('results');
+        Route::get('/results/view/{exam_id}',[ResultController::class, 'view'])->name('result.view');
+        Route::get('/results/details/{id}',[ResultController::class, 'details'])->name('result.details');
+        Route::post('/results/generate',[ResultController::class, 'generate'])->name('result.generate');
 
         Route::get('/present',[AttendanceController::class, 'toggle'])->name('attendance.take');
         Route::match(['get', 'post'],'/attendance',[AttendanceController::class, 'store'])->name('attendance');

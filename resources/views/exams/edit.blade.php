@@ -97,7 +97,8 @@
                                                 <select class="form-control selectpicker" data-live-search="true" name="courses[]" multiple aria-label="multiple select" required>
                                                     @foreach($courses as $course)
                                                     @php $check=0; @endphp
-                                                    @foreach($exam->courses() as $course2)
+
+                                                    @foreach($exam->courses as $course2)
                                                         @if ($course2->course_id == $course->id)
                                                         <option value="{{$course->id}}" selected>{{$course->name}}</option>
                                                         @php $check=1; @endphp
@@ -105,7 +106,7 @@
                                                         @endif
                                                     @endforeach
                                                     @if ($check==0)
-                                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                                        <option value="{{$course->id}}" >{{$course->name}}</option>
                                                     @endif
                                                 @endforeach
                                                 </select>

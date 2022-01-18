@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2022 at 08:08 AM
+-- Generation Time: Jan 18, 2022 at 06:43 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -64,7 +64,9 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`id`, `name`, `code`, `credit`, `created_at`, `updated_at`) VALUES
 (1, 'Computer Networks', 'CSE-3205', '3.0', '2022-01-11 11:13:00', '2022-01-11 11:17:06'),
-(2, 'Theory of Computation', 'CSE-3203', '3', '2022-01-17 13:13:53', '2022-01-17 13:13:53');
+(2, 'Theory of Computation', 'CSE-3203', '3.0', '2022-01-17 13:13:53', '2022-01-18 12:23:21'),
+(3, 'Mathematical Analysis for Computer Science', 'CSE-3201', '3.0', '2022-01-18 11:08:57', '2022-01-18 11:08:57'),
+(4, 'Computer Networks Lab', 'CSE-3206', '1.5', '2022-01-18 11:09:31', '2022-01-18 11:09:31');
 
 -- --------------------------------------------------------
 
@@ -129,8 +131,10 @@ CREATE TABLE `exam_courses` (
 --
 
 INSERT INTO `exam_courses` (`id`, `exam_id`, `course_id`, `created_at`, `updated_at`) VALUES
-(5, 1, 1, '2022-01-17 13:14:08', '2022-01-17 13:14:08'),
-(6, 1, 2, '2022-01-17 13:14:08', '2022-01-17 13:14:08');
+(14, 1, 1, '2022-01-18 12:39:24', '2022-01-18 12:39:24'),
+(15, 1, 2, '2022-01-18 12:39:24', '2022-01-18 12:39:24'),
+(16, 1, 3, '2022-01-18 12:39:24', '2022-01-18 12:39:24'),
+(17, 1, 4, '2022-01-18 12:39:24', '2022-01-18 12:39:24');
 
 -- --------------------------------------------------------
 
@@ -143,10 +147,8 @@ CREATE TABLE `exam_grades` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `grade_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `grade_point` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `point_from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `point_to` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mark_from` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mark_upto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mark_from` int(11) UNSIGNED NOT NULL,
+  `mark_upto` int(11) UNSIGNED NOT NULL,
   `comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -156,17 +158,17 @@ CREATE TABLE `exam_grades` (
 -- Dumping data for table `exam_grades`
 --
 
-INSERT INTO `exam_grades` (`id`, `name`, `grade_category_id`, `grade_point`, `point_from`, `point_to`, `mark_from`, `mark_upto`, `comment`, `created_at`, `updated_at`) VALUES
-(1, 'A+', 1, '4', NULL, NULL, '80', '100', 'First Class', '2022-01-13 11:15:55', '2022-01-13 11:39:43'),
-(2, 'A', 1, '3.75', NULL, NULL, '79', '75', 'First Class', '2022-01-13 11:30:12', '2022-01-13 11:39:49'),
-(3, 'A-', 1, '3.50', NULL, NULL, '60', '64', 'First Class', '2022-01-13 11:30:47', '2022-01-13 11:39:54'),
-(4, 'B+', 1, '3.25', NULL, NULL, '65', '69', 'First Class', '2022-01-13 11:31:35', '2022-01-13 11:40:03'),
-(5, 'B', 1, '3.00', NULL, NULL, '60', '64', 'First Class', '2022-01-13 11:32:01', '2022-01-13 11:40:14'),
-(6, 'B-', 1, '2.75', NULL, NULL, '55', '59', 'Second Class', '2022-01-13 11:32:44', '2022-01-13 11:40:32'),
-(7, 'C+', 1, '2.50', NULL, NULL, '50', '54', 'Second Class', '2022-01-13 11:33:53', '2022-01-13 11:40:48'),
-(8, 'C', 1, '2.25', NULL, NULL, '45', '49', 'Second Class Upper', '2022-01-13 11:34:34', '2022-01-13 11:41:07'),
-(9, 'D', 1, '2.00', NULL, NULL, '40', '44', 'Third Class', '2022-01-13 11:35:05', '2022-01-13 11:41:57'),
-(10, 'F', 1, '0', NULL, NULL, '0', '39', 'Fail', '2022-01-13 11:37:11', '2022-01-13 11:42:04');
+INSERT INTO `exam_grades` (`id`, `name`, `grade_category_id`, `grade_point`, `mark_from`, `mark_upto`, `comment`, `created_at`, `updated_at`) VALUES
+(1, 'A+', 1, '4', 80, 100, 'First Class', '2022-01-13 11:15:55', '2022-01-13 11:39:43'),
+(2, 'A', 1, '3.75', 75, 79, 'First Class', '2022-01-13 11:30:12', '2022-01-13 11:39:49'),
+(3, 'A-', 1, '3.50', 70, 74, 'First Class', '2022-01-13 11:30:47', '2022-01-13 11:39:54'),
+(4, 'B+', 1, '3.25', 65, 69, 'First Class', '2022-01-13 11:31:35', '2022-01-13 11:40:03'),
+(5, 'B', 1, '3.00', 60, 64, 'First Class', '2022-01-13 11:32:01', '2022-01-13 11:40:14'),
+(6, 'B-', 1, '2.75', 55, 59, 'Second Class', '2022-01-13 11:32:44', '2022-01-13 11:40:32'),
+(7, 'C+', 1, '2.50', 50, 54, 'Second Class', '2022-01-13 11:33:53', '2022-01-13 11:40:48'),
+(8, 'C', 1, '2.25', 45, 49, 'Second Class Upper', '2022-01-13 11:34:34', '2022-01-13 11:41:07'),
+(9, 'D', 1, '2.00', 40, 44, 'Third Class', '2022-01-13 11:35:05', '2022-01-13 11:41:57'),
+(10, 'F', 1, '0', 0, 39, 'Fail', '2022-01-13 11:37:11', '2022-01-13 11:42:04');
 
 -- --------------------------------------------------------
 
@@ -190,6 +192,20 @@ CREATE TABLE `exam_marks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `exam_marks`
+--
+
+INSERT INTO `exam_marks` (`id`, `cgpa`, `exam_position`, `batch_position`, `department_position`, `batch_id`, `department_id`, `student_id`, `exam_id`, `course_id`, `user_id`, `total_marks`, `created_at`, `updated_at`) VALUES
+(1, 4.00, NULL, NULL, NULL, 1, 1, 2, 1, 1, 1, 80.00, '2022-01-18 05:23:02', '2022-01-18 05:23:02'),
+(2, 2.00, NULL, NULL, NULL, 1, 1, 2, 1, 2, 1, 44.00, '2022-01-18 05:23:09', '2022-01-18 05:35:57'),
+(3, 3.50, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 71.00, '2022-01-18 05:24:28', '2022-01-18 08:19:20'),
+(4, 4.00, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 83.00, '2022-01-18 05:25:30', '2022-01-18 08:19:17'),
+(5, 3.00, NULL, NULL, NULL, 1, 1, 1, 1, 3, 1, 60.00, '2022-01-18 11:10:50', '2022-01-18 11:10:50'),
+(6, 3.50, NULL, NULL, NULL, 1, 1, 1, 1, 4, 1, 70.00, '2022-01-18 11:10:51', '2022-01-18 11:10:51'),
+(7, 3.25, NULL, NULL, NULL, 1, 1, 2, 1, 3, 1, 66.00, '2022-01-18 11:11:07', '2022-01-18 11:11:07'),
+(8, 3.75, NULL, NULL, NULL, 1, 1, 2, 1, 4, 1, 75.00, '2022-01-18 11:11:11', '2022-01-18 11:11:11');
 
 -- --------------------------------------------------------
 
@@ -352,6 +368,14 @@ CREATE TABLE `ranks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ranks`
+--
+
+INSERT INTO `ranks` (`id`, `batch_id`, `department_id`, `student_id`, `exam_id`, `gpa`, `credit`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2, 1, 3.18, 10.50, '2022-01-18 11:02:08', '2022-01-18 11:11:22'),
+(2, 1, 1, 1, 1, 3.50, 10.50, '2022-01-18 11:02:08', '2022-01-18 11:11:22');
 
 -- --------------------------------------------------------
 
@@ -592,7 +616,7 @@ ALTER TABLE `batches`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -610,7 +634,7 @@ ALTER TABLE `exams`
 -- AUTO_INCREMENT for table `exam_courses`
 --
 ALTER TABLE `exam_courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `exam_grades`
@@ -622,7 +646,7 @@ ALTER TABLE `exam_grades`
 -- AUTO_INCREMENT for table `exam_marks`
 --
 ALTER TABLE `exam_marks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -664,7 +688,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `ranks`
 --
 ALTER TABLE `ranks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `roles`

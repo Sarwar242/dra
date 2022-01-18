@@ -67,7 +67,7 @@
                                         <div class="form-group">
                                             <label for="field_id_name" class="col-sm-6 control-label">{{ $course->name }}({{ $course->code }})</label>
                                             <div class="col-sm-4">
-                                                <input type="number" step="any" class="form-control required" id="mark_{{ $course->id }}" name="marks" >
+                                                <input type="number" step="any" value="{{ $course->total_marks }}" class="form-control required" id="mark_{{ $course->id }}" name="marks" >
                                             </div>
                                             <div class="col-sm-2">
                                                 <button class="btn btn-sm btn-success" style="cursor: pointer;" onclick="save({{ $course->id }})">Save</button>
@@ -103,7 +103,6 @@
 @section('script')
 <script>
     function save(id){
-
         var exam_id = $("#exam_id").val();
         var student_id = $("#student_id").val();
         var marks = $("#mark_"+id).val();

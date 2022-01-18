@@ -19,9 +19,14 @@ class Exam extends Model
     {
         return $this->hasMany(ExamCourse::class);
     }
+    public function results()
+    {
+        return $this->hasMany(Rank::class);
+    }
     public function courses2()
     {
-        $courses = Course::join('exam_courses', 'exam_courses.course_id', '=', 'courses.id')->get();
+        $courses = Course::leftJoin('exam_courses', 'exam_courses.course_id', '=', 'courses.id')
+        ->select(['courses.id','courses.name','courses.code','exam_courses.exam_id'])->get();
         return $courses;
     }
 }

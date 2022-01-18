@@ -7,7 +7,7 @@
 <li class="treeview">
     <a href="/academics">
         <i class="fa fa-dashboard"></i>
-        <span>Academics</span>
+        <span>Academic</span>
         <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
@@ -60,6 +60,7 @@
             <a href="#" data-toggle="modal" style="cursor: pointer;"  id="mod" data-target="#modal0" class="nav-link">
                 <i class="fa fa-pencil-square-o"></i>
                 <span>Marks Input</span>
+                <a href="{{ route('marks') }}" style="display: none;"></a>
             </a>
         </li>
         <li>
@@ -83,7 +84,7 @@
     </ul>
 </li>
 <li class="treeview">
-    <a href="/results">
+    <a href="{{ route('results') }}">
         <i class="fa fa-graduation-cap"></i>
         <span>Results</span>
     </a>

@@ -9,7 +9,7 @@ class ExamGrade extends Model
 {
     use HasFactory;
     public $fillable = [
-        'name', 'grade_point', 'point_from', 'point_to', 'mark_from', 'mark_upto', 'comment', 'grade_category_id'
+        'name', 'grade_point', 'mark_from', 'mark_upto', 'comment', 'grade_category_id'
     ];
 
     public function grade_category(){

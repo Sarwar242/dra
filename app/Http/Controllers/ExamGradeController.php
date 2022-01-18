@@ -40,8 +40,6 @@ class ExamGradeController extends Controller
         $this->validate($request,[
             'name' => 'required|string',
             'grade_point' => 'required',
-            'point_from' => 'nullable',
-            'point_to' => 'nullable',
             'mark_from' => 'required',
             'mark_upto' => 'required',
             'comment' => 'nullable',
@@ -52,8 +50,6 @@ class ExamGradeController extends Controller
             $examGrade = new ExamGrade;
             $examGrade -> name = $request -> name;
             $examGrade -> grade_point = $request -> grade_point;
-            $examGrade -> point_from = $request -> point_from;
-            $examGrade -> point_to = $request -> point_to;
             $examGrade -> mark_from = $request -> mark_from;
             $examGrade -> mark_upto = $request -> mark_upto;
             $examGrade -> comment = $request -> comment;

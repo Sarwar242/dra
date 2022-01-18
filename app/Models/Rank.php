@@ -11,7 +11,7 @@ class Rank extends Model
     public $fillable = [
         'gpa', 'credit', 'batch_id', 'department_id', 'student_id', 'exam_id'
     ];
-
+    //grade point = summation(achieved credit * course credit) / total credits
     public function department()
     {
         return $this->belongsTo(Department::class);
@@ -23,5 +23,9 @@ class Rank extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+    public function exam()
+    {
+        return $this->belongsTo(Exam::class);
     }
 }
