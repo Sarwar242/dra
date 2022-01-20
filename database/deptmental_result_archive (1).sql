@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2022 at 06:43 PM
+-- Generation Time: Jan 20, 2022 at 01:07 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -41,7 +41,8 @@ CREATE TABLE `batches` (
 --
 
 INSERT INTO `batches` (`id`, `name`, `session`, `department_id`, `created_at`, `updated_at`) VALUES
-(1, '4th', '2016-17', 1, '2022-01-11 23:08:56', '2022-01-11 23:08:56');
+(1, '4th', '2016-17', 1, '2022-01-11 23:08:56', '2022-01-11 23:08:56'),
+(2, '5th', '2017-18', 1, '2022-01-20 02:30:24', '2022-01-20 02:30:24');
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,11 @@ INSERT INTO `courses` (`id`, `name`, `code`, `credit`, `created_at`, `updated_at
 (1, 'Computer Networks', 'CSE-3205', '3.0', '2022-01-11 11:13:00', '2022-01-11 11:17:06'),
 (2, 'Theory of Computation', 'CSE-3203', '3.0', '2022-01-17 13:13:53', '2022-01-18 12:23:21'),
 (3, 'Mathematical Analysis for Computer Science', 'CSE-3201', '3.0', '2022-01-18 11:08:57', '2022-01-18 11:08:57'),
-(4, 'Computer Networks Lab', 'CSE-3206', '1.5', '2022-01-18 11:09:31', '2022-01-18 11:09:31');
+(4, 'Computer Networks Lab', 'CSE-3206', '1.5', '2022-01-18 11:09:31', '2022-01-18 11:09:31'),
+(5, 'Microprocessor and Microcontrollers', 'CSE-3207', '3.0', '2022-01-20 02:27:15', '2022-01-20 02:27:15'),
+(6, 'Assembly Language, Microprocessor and Microcontrollers Lab', 'CSE-3208', '1.5', '2022-01-20 02:28:12', '2022-01-20 02:28:12'),
+(7, 'Economics', 'HUM-3209', '2.0', '2022-01-20 02:28:39', '2022-01-20 02:29:23'),
+(8, 'Professional Ethics and Industrial Management', 'HUM-3211', '3.0', '2022-01-20 02:29:11', '2022-01-20 02:29:11');
 
 -- --------------------------------------------------------
 
@@ -198,14 +203,22 @@ CREATE TABLE `exam_marks` (
 --
 
 INSERT INTO `exam_marks` (`id`, `cgpa`, `exam_position`, `batch_position`, `department_position`, `batch_id`, `department_id`, `student_id`, `exam_id`, `course_id`, `user_id`, `total_marks`, `created_at`, `updated_at`) VALUES
-(1, 4.00, NULL, NULL, NULL, 1, 1, 2, 1, 1, 1, 80.00, '2022-01-18 05:23:02', '2022-01-18 05:23:02'),
-(2, 2.00, NULL, NULL, NULL, 1, 1, 2, 1, 2, 1, 44.00, '2022-01-18 05:23:09', '2022-01-18 05:35:57'),
+(1, 3.75, NULL, NULL, NULL, 1, 1, 2, 1, 1, 1, 77.00, '2022-01-18 05:23:02', '2022-01-20 02:56:35'),
+(2, 4.00, NULL, NULL, NULL, 1, 1, 2, 1, 2, 1, 85.00, '2022-01-18 05:23:09', '2022-01-20 02:56:38'),
 (3, 3.50, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 71.00, '2022-01-18 05:24:28', '2022-01-18 08:19:20'),
 (4, 4.00, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 83.00, '2022-01-18 05:25:30', '2022-01-18 08:19:17'),
 (5, 3.00, NULL, NULL, NULL, 1, 1, 1, 1, 3, 1, 60.00, '2022-01-18 11:10:50', '2022-01-18 11:10:50'),
 (6, 3.50, NULL, NULL, NULL, 1, 1, 1, 1, 4, 1, 70.00, '2022-01-18 11:10:51', '2022-01-18 11:10:51'),
-(7, 3.25, NULL, NULL, NULL, 1, 1, 2, 1, 3, 1, 66.00, '2022-01-18 11:11:07', '2022-01-18 11:11:07'),
-(8, 3.75, NULL, NULL, NULL, 1, 1, 2, 1, 4, 1, 75.00, '2022-01-18 11:11:11', '2022-01-18 11:11:11');
+(7, 3.75, NULL, NULL, NULL, 1, 1, 2, 1, 3, 1, 75.00, '2022-01-18 11:11:07', '2022-01-20 02:56:39'),
+(8, 3.00, NULL, NULL, NULL, 1, 1, 2, 1, 4, 1, 60.00, '2022-01-18 11:11:11', '2022-01-20 02:56:41'),
+(9, 4.00, NULL, NULL, NULL, 1, 1, 3, 1, 1, 1, 80.00, '2022-01-20 02:31:07', '2022-01-20 02:31:07'),
+(10, 3.50, NULL, NULL, NULL, 1, 1, 3, 1, 2, 1, 70.00, '2022-01-20 02:31:09', '2022-01-20 02:31:09'),
+(11, 3.00, NULL, NULL, NULL, 1, 1, 3, 1, 3, 1, 60.00, '2022-01-20 02:31:10', '2022-01-20 02:31:10'),
+(12, 4.00, NULL, NULL, NULL, 1, 1, 3, 1, 4, 1, 80.00, '2022-01-20 02:31:11', '2022-01-20 02:31:11'),
+(13, 4.00, NULL, NULL, NULL, 1, 1, 4, 1, 1, 1, 80.00, '2022-01-20 02:53:35', '2022-01-20 02:53:35'),
+(14, 3.50, NULL, NULL, NULL, 1, 1, 4, 1, 2, 1, 70.00, '2022-01-20 02:53:37', '2022-01-20 02:53:37'),
+(15, 3.75, NULL, NULL, NULL, 1, 1, 4, 1, 3, 1, 77.00, '2022-01-20 02:53:38', '2022-01-20 02:53:38'),
+(16, 3.50, NULL, NULL, NULL, 1, 1, 4, 1, 4, 1, 70.00, '2022-01-20 02:53:39', '2022-01-20 02:53:39');
 
 -- --------------------------------------------------------
 
@@ -374,8 +387,10 @@ CREATE TABLE `ranks` (
 --
 
 INSERT INTO `ranks` (`id`, `batch_id`, `department_id`, `student_id`, `exam_id`, `gpa`, `credit`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 1, 3.18, 10.50, '2022-01-18 11:02:08', '2022-01-18 11:11:22'),
-(2, 1, 1, 1, 1, 3.50, 10.50, '2022-01-18 11:02:08', '2022-01-18 11:11:22');
+(1, 1, 1, 2, 1, 3.71, 10.50, '2022-01-18 11:02:08', '2022-01-20 02:57:02'),
+(2, 1, 1, 1, 1, 3.50, 10.50, '2022-01-18 11:02:08', '2022-01-18 11:11:22'),
+(3, 1, 1, 3, 1, 3.57, 10.50, '2022-01-20 02:31:48', '2022-01-20 02:57:02'),
+(4, 1, 1, 4, 1, 3.71, 10.50, '2022-01-20 02:54:19', '2022-01-20 02:57:02');
 
 -- --------------------------------------------------------
 
@@ -424,7 +439,11 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`id`, `name`, `reg_no`, `roll`, `email`, `address`, `session`, `department_id`, `batch_id`, `created_at`, `updated_at`) VALUES
 (1, 'Sarwar Hossain', '110-016-17', '17CSE016', 'sarwar.cse4.bu@gmail.com', 'chairmanpara, nachole-6310, nachole, chapainawabgonj', '2016-17', 1, 1, '2022-01-12 00:13:36', '2022-01-12 00:20:28'),
-(2, 'Aspia', '110-023-17', '17CSE023', 'aspia.cse4.bu@gmail.com', 'Dhaka', '2016-17', 1, 1, '2022-01-17 13:12:43', '2022-01-17 13:12:43');
+(2, 'Aspia', '110-023-17', '17CSE023', 'aspia.cse4.bu@gmail.com', 'Dhaka', '2016-17', 1, 1, '2022-01-17 13:12:43', '2022-01-17 13:12:43'),
+(3, 'Rimon Chandra Paul', '110-030-17', '17CSE030', 'rimon.cse4.bu@gmail.com', 'Barishal', '2016-17', 1, 1, '2022-01-20 02:22:36', '2022-01-20 02:22:36'),
+(4, 'Mst. Halima', '110-018-17', '17CSE018', 'sonia.cse4.bu@gmail.com', 'Barishal, Bangladesh', '2016-17', 1, 1, '2022-01-20 02:23:44', '2022-01-20 02:23:44'),
+(5, 'Ashikur Rahman Ashik', '110-048-17', '17CSE048', 'ashik.cse4.bu@gmail.com', 'Barishal, Bangladesh', '2016-17', 1, 1, '2022-01-20 02:25:48', '2022-01-20 02:25:48'),
+(6, 'Tamanna Ferdaus', '110-012-17', '17CSE012', 'ferdaustamanna@gmail.com', 'Barishal', '2016-17', 1, 1, '2022-01-20 02:49:00', '2022-01-20 02:49:00');
 
 -- --------------------------------------------------------
 
@@ -610,13 +629,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -646,7 +665,7 @@ ALTER TABLE `exam_grades`
 -- AUTO_INCREMENT for table `exam_marks`
 --
 ALTER TABLE `exam_marks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -688,7 +707,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `ranks`
 --
 ALTER TABLE `ranks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -700,7 +719,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

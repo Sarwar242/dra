@@ -57,7 +57,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="field_id_name" class="col-sm-4 control-label">Name</label>
+                                        <label for="field_id_name" class="col-sm-4 control-label">Batch Name</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control required" id="field_id_name" name="name" >
                                         </div>

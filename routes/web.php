@@ -29,6 +29,7 @@ use App\Http\Controllers\RoleController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('/result', [ResultController::class, 'result'])->name('result.see');
 Route::get('/home', function () {
     return view('home');
 })->name('home');

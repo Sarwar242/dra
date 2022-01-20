@@ -22,99 +22,43 @@
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-8xl mx-auto sm:px-6 lg:px-8" style="width:800px;">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <img src="/dist/img/logo.png" class="h-16 w-auto text-gray-700 sm:h-20">
                 </div>
-                @if(Session::has('success'))
-
-                        <div class="alert alert-success alert-block text-light">
-                            <button type="button" class="close" data-dismiss="alert">
-                                x
-                            </button>
-                            <strong>
-                                {!! session('success') !!}
-                            </strong>
-                        </div>
-                    @endif
-                    @if(Session::has('failed'))
-
-                        <div class="alert alert-error alert-block text-danger bg-light">
-                            <button type="button" class="close" data-dismiss="alert">
-                                x
-                            </button>
-                            <strong>
-                                {!! session('failed') !!}
-                            </strong>
-                        </div>
-
-                    @endif
-                    @foreach ($errors->all() as $message)
-                        <div class="alert alert-danger alert-block text-danger bg-light">
-                            <button type="button" class="close" data-dismiss="alert">
-                                x
-                            </button>
-                            <strong>
-                                {!! $message !!}
-                            </strong>
-                            </div>
-                    @endforeach
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="flex items-center card bg-light mb-3">
+                    <div class="flex items-center card w-100 bg-light mb-3" style="width:600px;">
                         <div class="card-header bg-dark text-light">
-                            See Result
+                            Your Result
                         </div>
 
-                        <form method="post" class="form" action="{{ route('result.see') }}">
-                            @csrf
-                            <div class="card-body row">
-                                <div class="form-group col-sm-8">
-                                    <label for="roll">Class Roll</label>
-                                    <input type="text" class="form-control" name="roll" id="roll" required>
-                                </div>
-                                <div class="form-group col-sm-8">
-                                    <label for="reg_no">Registration Number</label>
-                                    <input type="text" class="form-control" name="reg_no" id="reg_no" required>
-                                </div>
-                                <div class="form-group col-sm-8">
-                                    <label for="exam_id">Exam</label>
-                                    <select class="form-control selectpicker" name="exam_id" id="exam_id" required>
-                                        <option value="" disabled selected>Select One</option>
-                                        @foreach (App\Models\Exam::all() as $exam)
-                                            <option value="{{ $exam->id }}">{{ $exam->name }}-{{ $exam->year }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-8">
-                                    <label for="batch">Department-Batch</label>
-                                    <select class="form-control selectpicker" name="batch_id" id="batch" required>
-                                        <option value="" disabled selected>Select One</option>
-                                        @foreach (App\Models\Batch::all() as $batch)
-                                            <option value="{{ $batch->id }}">{{ $batch->department->name }}--{{ $batch->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
+                            <div class="card-body">
+                                <ul class="list-group w-600">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center w-600">
+                                      Name:
+                                      <span class="text text-bold">{{ $result->student->name }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Roll:
+                                      <span class="text text-bold">{{ $result->student->roll }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Session:
+                                      <span class="text text-bold">{{ $result->student->session }}</span>
+                                    </li>
+                                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Exam: &nbsp;&nbsp;&nbsp;&nbsp;
+                                      <span class="text text-bold"> {{ $result->exam->name }} - {{ $result->exam->year }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                      Result [CGPA]:
+                                      <span class="text text-bold">{{ $result->gpa }}</span>
+                                    </li>
+                                  </ul>
                             </div>
-                        <div class="card-footer">
-                        <button type="submit" id="submit" class="btn btn-primary float-right">View</button>
                         </div>
-                    </form>
+
                     </div>
                 </div>
             </div>
