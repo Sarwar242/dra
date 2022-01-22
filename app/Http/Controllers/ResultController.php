@@ -79,7 +79,7 @@ class ResultController extends Controller
                 $result->gpa=$total_gpa/$total_credit;
                 /** if a student fails in more than 3 subjects then he/she will not be promoted */
                 $result->failed = $total_failed;
-                if($total_failed>3){
+                if($total_failed>3||($total_gpa/$total_credit)<2.0){
                     $result->status= "not promoted";
                 }else{
                     $result->status= "promoted";

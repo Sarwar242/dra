@@ -70,7 +70,7 @@
                                     <td>{{ $result->gpa }}</td>
                                     <td>{{ ucwords($result->status) }}
                                         @if($result->failed>0)
-                                            (Failed in {{ $result->failed }} subjects!)
+                                            (Failed in {{ $result->failed }} {{ $result->failed==1?'subject':'subjects' }}!)
                                         @endif
                                     </td>
 
