@@ -78,4 +78,35 @@ class ResultController extends Controller
         session()->flash('success', 'The Result has been generated successfully!!');
         return redirect()->route('results');
     }
+
+
+
+    /** Frontend */
+    public function result(Request $request)
+    {
+        $this->validate($request,[
+            'roll' => 'required',
+            'reg_no' => 'required',
+            'exam_id' => 'required',
+            'batch_id' => 'required',
+        ]);
+
+        $student = Student::where('roll', $request->roll)
+                            ->where('reg_no', $request->reg_no)
+                            ->first();
+        if(empty($student)){
+            session()->flash('failed', 'Invalid Roll/Registration!!');
+            return back();
+        }
+        $result = Rank::where('student_id', $student->id)
+                        ->where('batch_id', $request-> batch_id)
+                        ->where('exam_id', $request->exam_id)->first();
+        if(empty($result)){
+            session()->flash('failed', 'Sorry, Result Not Published Yet!!');
+            return back();
+        }
+
+        return view('result', compact('result'));
+    }
+
 }
