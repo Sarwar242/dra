@@ -57,7 +57,7 @@
                                 <th>Course</th>
                                 <th>Credit</th>
                                 <th>Grade Point</th>
-                                <th>Mark</th>
+                                <th>Marks</th>
                                 <th>Comment</th>
 
                             </tr>

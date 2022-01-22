@@ -56,6 +56,7 @@
                                 <th>Department</th>
                                 <th>Batch</th>
                                 <th>CGPA</th>
+                                <th>Status</th>
                                 <th>Comment</th>
                                 <th class="text-center" width="100px" >Action</th>
                             </tr>
@@ -67,6 +68,12 @@
                                     <td>{{ $exam->batch->department->name }}</td>
                                     <td>{{ $exam->batch->name }}</td>
                                     <td>{{ $result->gpa }}</td>
+                                    <td>{{ ucwords($result->status) }}
+                                        @if($result->failed>0)
+                                            (Failed in {{ $result->failed }} subjects!)
+                                        @endif
+                                    </td>
+
                                     <td>{{ Helper::comment($result->gpa) }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-sm btn-info"  href="{{ route('result.details', $result->id) }}" title="View"><i class="fa fa-eye"></i></a>

@@ -19,6 +19,8 @@ class CreateRanksTable extends Migration
             $table->unSignedBigInteger('department_id')->nullable();
             $table->unSignedBigInteger('student_id')->nullable();
             $table->unSignedBigInteger('exam_id')->nullable();
+            $table->unSignedInteger('failed')->default(0)->nullable();
+            $table->string('status')->default("promoted")->nullable();
             $table->double('gpa', 10, 2)->nullable();
             $table->double('credit', 10, 2)->nullable();
             $table->timestamps();

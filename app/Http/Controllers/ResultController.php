@@ -56,6 +56,7 @@ class ResultController extends Controller
         foreach ($marks->unique('student_id') as $value){
                 $total_gpa=0.0;
                 $total_credit = 0.0;
+                $total_failed = 0;
                 $result = Rank::where('student_id', $value->student_id)
                                 ->where('batch_id', $request-> batch_id)
                                 ->where('exam_id', $request->exam_id)->first();
@@ -68,9 +69,21 @@ class ResultController extends Controller
                 foreach($marks->where('student_id', $value->student_id)->unique('course_id') as $obj){
                     $total_gpa += $obj->cgpa * $obj->course->credit;
                     $total_credit += $obj->course->credit;
+                    /** Failed Course Count */
+                    if($obj->cgpa==0){
+                        $total_failed +=1;
+                    }
+
                 }
                 $result->credit=$total_credit;
                 $result->gpa=$total_gpa/$total_credit;
+                /** if a student fails in more than 3 subjects then he/she will not be promoted */
+                $result->failed = $total_failed;
+                if($total_failed>3){
+                    $result->status= "not promoted";
+                }else{
+                    $result->status= "promoted";
+                }
                 $result->save();
         }
                             //courses*students
