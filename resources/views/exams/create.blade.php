@@ -97,7 +97,7 @@
                                         <div class="col-sm-8">
                                             <select class="form-control selectpicker" data-live-search="true" name="courses[]" multiple aria-label="multiple select" required>
                                                 @foreach($courses as $course)
-                                                    <option value="{{$course->id}}">{{$course->name}}</option>
+                                                    <option value="{{$course->id}}">{{$course->name}} ({{ $course->code }})</option>
                                                 @endforeach
                                             </select>
                                         </div>
