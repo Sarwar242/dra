@@ -31,7 +31,7 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-8 title-bar">
-                <h1><i class="fa fa-building-o"></i> Exams</h1>
+                <h1><i class="fa fa-building-o"></i> Results</h1>
             </div>
 
             <div class="col-xs-12 col-md-4 text-right">

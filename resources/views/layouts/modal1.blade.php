@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Marks Input</h5>
+          <h5 class="modal-title">Generate Result</h5>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <form method="post" action="{{ route('result.generate') }}">

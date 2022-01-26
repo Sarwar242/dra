@@ -100,13 +100,13 @@
 
                                                     @foreach($exam->courses as $course2)
                                                         @if ($course2->course_id == $course->id)
-                                                        <option value="{{$course->id}}" selected>{{$course->name}}</option>
+                                                        <option value="{{$course->id}}" selected>{{$course->name}} ({{ $course->code }})</option>
                                                         @php $check=1; @endphp
                                                         @break
                                                         @endif
                                                     @endforeach
                                                     @if ($check==0)
-                                                        <option value="{{$course->id}}" >{{$course->name}}</option>
+                                                        <option value="{{$course->id}}" >{{$course->name}} ({{ $course->code }})</option>
                                                     @endif
                                                 @endforeach
                                                 </select>
